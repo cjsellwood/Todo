@@ -1,0 +1,99 @@
+* {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+#sidebar {
+    background-color: rgb(236, 236, 236);
+    outline: 2px solid rgb(218, 218, 218);
+    width: 0;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 100px;
+    transition: 0.5s;
+}
+
+#close-sidebar {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    width: 75px;
+    height: 75px;
+}
+
+#open-sidebar {
+    width: 75px;
+    height: 75px;
+}
+
+#projects-list ul li {
+    display: block;
+    white-space: nowrap;
+}
+
+#new-todo {
+    text-align: center;
+    outline: 2px solid red;
+    height: 50px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#container {
+    outline: 2px solid blue;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid-item {
+    outline: 1px solid rgb(204, 204, 204);
+    margin: 10px 0 10px 0;
+    min-width: 100%;
+}
+
+.grid-item * {
+    margin: 10px;
+}
+
+
+
+@media only screen and (min-width: 800px) {
+    #sidebar {
+        width: 300px;
+    }
+    
+    #new-todo {
+        margin-left: 320px;
+        margin-right: 20px;
+        margin-top: 5vh;
+    }
+
+    #container {
+        outline: 2px solid blue;
+        margin-left: 320px;
+        margin-right: 20px;
+    }
+
+    .grid-item {
+        min-width: 200px;
+        margin: 20px;
+        max-width: 600px;
+    }
+    
+
+
+    #close-sidebar {
+        display: none;
+    }
+    
+    #open-sidebar {
+        display: none;
+    }
+} 
