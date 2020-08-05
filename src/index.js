@@ -45,6 +45,11 @@ function newProject() {
         projectSubmit.id = "new-project-submit";
         inputDiv.appendChild(projectSubmit);
 
+        // Cancel button
+        projectCancel = document.createElement("div");
+        projectCancel.id = "new-project-cancel";
+        inputDiv.appendChild(projectCancel);
+
         const parent = document.getElementById("projects-list");
         parent.insertBefore(inputDiv, newBtn);
         
@@ -57,16 +62,34 @@ function newProject() {
 
 newProject();
 
-// Save new Project name
+// Save new Project name or cancel input
 function saveProject() {
     const projectInput = document.getElementById("new-project-input");
     const projectSubmit = document.getElementById("new-project-submit");
+
+    // Array of already defined projects
+    let projectsArray = document.getElementsByClassName("projects-item");
+    projectsArray = Array.from(projectsArray).map(x => x.textContent.toLowerCase());
+
     projectSubmit.addEventListener('click', () => {
-        if (projectInput.value === "") {
+        let text = projectInput.value;
+        if (text === "") {
+            // Indicate that no text entered
             projectInput.style.borderBottom = "2px solid red";
-            return;
+
+        } else if (projectsArray.indexOf(text.toLowerCase()) !== -1) {
+            // Indicate that there is already a project called that
+            projectInput.value = "";
+            projectInput.style.borderBottom = "2px solid red";
+            projectInput.setAttribute("placeholder", "Already Exists");
+
+        } else if (text.length > 20) {
+            // Indicate that the project name was too long
+            projectInput.value = "";
+            projectInput.style.borderBottom = "2px solid red";
+            projectInput.setAttribute("placeholder", "Too Long");
+
         } else {
-            let text = projectInput.value;
             const addedProject = document.createElement("div");
             addedProject.classList.add("projects-item");
             addedProject.textContent = text;
@@ -82,16 +105,15 @@ function saveProject() {
             // Allow pressing new project button again
             newProject();
         }
-        
-
-
-      // On press of check mark
-      //// Get data from input
-      // Add new div with text from input
-      // Remove input div
-      // Allow pressing new project button again
     })
 
+    const projectCancel = document.getElementById("new-project-cancel");
+    projectCancel.addEventListener('click', () => {
+        // Remove input field
+        const inputDiv = document.getElementById("input-div");
+        inputDiv.remove();
 
+        // Allow pressing new project button again
+        newProject();
+    })
 }
-
