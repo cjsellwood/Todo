@@ -1,8 +1,6 @@
-import { controlSidebar, newProject, addProjects } from './sidebar.js';
+import { startSidebar } from './sidebar.js';
 
-controlSidebar();
-addProjects();
-newProject();
+startSidebar();
 
 
 

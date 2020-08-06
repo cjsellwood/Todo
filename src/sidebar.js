@@ -219,5 +219,11 @@ function getProjectsFromStorage() {
     return JSON.parse(window.localStorage.getItem('projects'));
 }
 
+function startSidebar() {
+    controlSidebar();
+    newProject();
+    addProjects();
+}
 
-export { controlSidebar, newProject, addProjects }
+
+export { startSidebar }
