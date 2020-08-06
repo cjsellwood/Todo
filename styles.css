@@ -31,16 +31,12 @@
 .projects-item {
     display: block;
     white-space: nowrap;
-
     font-size: 1.5em;
     width: auto;
+    cursor: pointer;
 }
 
-.projects-item:hover {
-    background-color: rgb(233, 233, 233);
-}
-
-.projects-item > p {
+.project-text {
     display: inline-block;
     width: 80%;
     margin-left: 5%;
@@ -63,13 +59,23 @@
     cursor: pointer;
     padding: 20px 20px 20px 20px;
     padding-right: 10%;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.5em;
+    width: auto;
 }
 
+
 #input-div {
-    width: 65vw;
+    width: 75vw;
     max-width: 300px;
     display: flex;
+    outline: yellowgreen;
+    padding: 20px 0px 20px 0px;
+    margin: auto;
+    cursor: auto;
 }
+
 
 #new-project-input {
     font-size: 1em;
@@ -98,19 +104,32 @@
 #all-projects {
     background-color: rgb(209, 255, 232);
     padding-right: 10%;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.5em;
+    width: auto;
+    cursor: pointer;
+}
+
+#all-projects > p {
+    display: inline-block;
+    width: 80%;
+    margin-left: 5%;
+    padding: 20px 0px 20px 0px;
 }
 
 #close-sidebar {
     position: absolute;
-    top: 0;
-    right: 25px;
-    width: 70px;
-    height: 70px;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
 }
 
 #open-sidebar {
-    width: 70px;
-    height: 70px;
+    padding: 10px;
+    width: 60px;
+    height: 60px;
 }
 
 
