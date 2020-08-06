@@ -1,6 +1,6 @@
-import { startSidebar } from './sidebar.js';
+import { sidebarModule } from './sidebar.js';
 
-startSidebar();
+sidebarModule.startSidebar();
 
 
 
