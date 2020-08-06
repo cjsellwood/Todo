@@ -14,9 +14,73 @@ function controlSidebar() {
 
 controlSidebar();
 
+// Add starting projects to list
+function addProjects() {
+    // Get stored list of projects or set to empty if none exists
+    let projects = getProjectsFromStorage();
+    if (projects === null) {
+        projects = [];
+        addProjectsToStorage(projects);
+    }
+    const projectsList = document.getElementById("projects-list");
+
+    for (let i = 0; i < projects.length; i++) {
+        const addedProject = document.createElement("div");
+        addedProject.classList.add("projects-item");
+
+        // Project inner text
+        const projectText = document.createElement("p");
+        projectText.textContent = projects[i];
+        projectText.classList.add("project-text");
+        addedProject.appendChild(projectText);
+
+        // Delete project button
+        const deleteBtn = document.createElement("div");
+        deleteBtn.classList.add("delete");
+        deleteBtn.textContent = "x";
+        addedProject.appendChild(deleteBtn, addedProject);
+        
+        const newBtn = document.getElementById("new-project");
+
+        projectsList.insertBefore(addedProject, newBtn);
+
+        addDeleteBtn(deleteBtn, addedProject);
+    }
+    addHighlight()
+}
+
+addProjects();
+
+// Makes delete project button work
+function addDeleteBtn(btn, parent) {
+    btn.addEventListener("click", function newDeleteBtn() {
+        event.stopPropagation();
+        console.log(event);
+        const removed = parent.getElementsByClassName("project-text")[0].textContent;
+
+        // Remove from local storage
+        let projects = getProjectsFromStorage();
+        const removedIndex = projects.indexOf(removed);
+        projects.splice(removedIndex, 1);
+        addProjectsToStorage(projects);
+
+        // If input is open delete it to so that name can be same as deleted
+        const inputDiv = document.getElementById("input-div");
+        if (inputDiv !== null) {
+            inputDiv.remove();
+            newProject();
+        }
+
+        parent.remove();
+
+        btn.removeEventListener("click", newDeleteBtn);
+    })
+}
+
 // Add new project button
 function newProject() {
     const newBtn = document.getElementById("new-project");
+    newBtn.style.cursor = "pointer";
     newBtn.addEventListener("click", function newProjectClick() {
         // Create div for input and submit button
         const inputDiv = document.createElement("div");
@@ -46,7 +110,12 @@ function newProject() {
         // Remove event listener after first click
         newBtn.removeEventListener('click', newProjectClick);
         
+        // Enables saving of input
         saveProject();
+
+        // Change cursor on new project button
+        newBtn.style.cursor = "auto";
+
     })
 }
 
@@ -56,9 +125,12 @@ function saveProject() {
     const projectSubmit = document.getElementById("new-project-submit");
     
     // Array of already defined projects
-    let projectsArray = document.getElementsByClassName("projects-item");
-    projectsArray = Array.from(projectsArray).map(x => x.textContent.toLowerCase());
-    
+    let projectsArray = document.getElementsByClassName("project-text");
+    projectsArray = Array.from(projectsArray).map(x => 
+        x.textContent.toLowerCase());
+    projectsArray.push("all");
+    projectsArray.push("+ new project");
+
     projectSubmit.addEventListener('click', () => {
         let text = projectInput.value;
         if (text === "") {
@@ -76,22 +148,45 @@ function saveProject() {
             projectInput.value = "";
             projectInput.style.borderBottom = "2px solid red";
             projectInput.setAttribute("placeholder", "Too Long");
-            
+        
         } else {
             const addedProject = document.createElement("div");
             addedProject.classList.add("projects-item");
-            addedProject.textContent = text;
+
+            // Project inner text
+            const projectText = document.createElement("p");
+            projectText.textContent = text;
+            projectText.classList.add("project-text")
+            addedProject.appendChild(projectText);
+
+            // Delete project button
+            const deleteBtn = document.createElement("div");
+            deleteBtn.classList.add("delete");
+            deleteBtn.textContent = "x";
+            addedProject.appendChild(deleteBtn);      
             
             const inputDiv = document.getElementById("input-div");
             
             const parent = document.getElementById("projects-list");
             parent.insertBefore(addedProject, inputDiv);
+
+            // Make delete button work
+            addDeleteBtn(deleteBtn, addedProject);
             
             // Remove input field after new project added to list
             inputDiv.remove();
             
             // Allow pressing new project button again
             newProject();
+
+
+            // Add to local storage of projects
+            let projects = getProjectsFromStorage();
+            projects.push(text);
+            addProjectsToStorage(projects);
+
+            // Allow selection of new projects
+            addHighlight()
         }
     })
     
@@ -109,12 +204,39 @@ function saveProject() {
 
 newProject();
 
+function addHighlight() {
+    let projectsArray = document.querySelectorAll(".projects-item, #all-projects");
+    Array.from(projectsArray).forEach(element => {
+        element.addEventListener("click", function highlight() {
+            Array.from(projectsArray).forEach(i => {
+                i.style.backgroundColor = "white";
+            })
+            element.style.backgroundColor = "rgb(209, 255, 232)";
+            console.log("Change selection");
+        })
+    })
+}
+
+// Store projects in local storage
+function addProjectsToStorage(array) {
+    window.localStorage.setItem('projects', JSON.stringify(array));
+}
+
+// Retrieve projects from local storage
+function getProjectsFromStorage() {
+    return JSON.parse(window.localStorage.getItem('projects'));
+}
+
+
+
+
 // Create todo object with factory function 
 // Need title, description, dueDate, priority
 const todoFactory = (title, description, dueDate, priority) => {
     return { title, description, dueDate, priority };
 }
 
-let shopping = todoFactory("Shopping", "Going to the shops", "04/05/2020", "medium")
-console.log(todoFactory)
-console.log(shopping)
+let shopping = todoFactory("Shopping", "Going to the shops", "04/05/2020",
+                            "medium");
+console.log(todoFactory);
+console.log(shopping);
