@@ -11,15 +11,29 @@
         <div id="sidebar">
             <img id="close-sidebar" src="x.svg" alt="close sidebar">
             <div id="projects-list">
-                <div id="all-projects">
-                    <p>All</p>
-                </div>
+                <div id="all-projects"><p>All</p></div>
                 <div id="new-project">+ New Project</div>
             </div>
         </div>
         <img id="open-sidebar" src="list.svg" alt="open sidebar">
         <div id="new-todo">
-            New Todo
+            <p>New Todo</p>
+            <form id="new-todo-form">
+                <label>Title</label><br>
+                <input type="text"><br>
+                <label>Description</label><br>
+                <textarea></textarea><br>
+                <label>Due Date</label><br>
+                <input id="date-input" type="date"><br>
+                <label>Priority</label><br>
+                <select>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select><br>
+                <button type="button" id="submit-todo">Submit</button>
+                <button type="button" id="cancel-todo">Cancel</button>
+            </form>
         </div>
         <div id="container">
             <div class="grid-item">

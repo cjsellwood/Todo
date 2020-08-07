@@ -34,9 +34,8 @@ const sidebarModule = (() => {
             addedProject.appendChild(projectText);
 
             // Delete project button
-            const deleteBtn = document.createElement("div");
+            const deleteBtn = document.createElement("button");
             deleteBtn.classList.add("delete");
-            deleteBtn.textContent = "x";
             addedProject.appendChild(deleteBtn, addedProject);
             
             const newBtn = document.getElementById("new-project");
@@ -155,9 +154,8 @@ const sidebarModule = (() => {
                 addedProject.appendChild(projectText);
 
                 // Delete project button
-                const deleteBtn = document.createElement("div");
+                const deleteBtn = document.createElement("button");
                 deleteBtn.classList.add("delete");
-                deleteBtn.textContent = "x";
                 addedProject.appendChild(deleteBtn);      
                 
                 const inputDiv = document.getElementById("input-div");
@@ -196,6 +194,7 @@ const sidebarModule = (() => {
         })
     }
 
+    let currentSelection = "All";
     function addHighlight() {
         let projectsArray = document.querySelectorAll(".projects-item, #all-projects");
         Array.from(projectsArray).forEach(element => {
@@ -204,8 +203,14 @@ const sidebarModule = (() => {
                     i.style.backgroundColor = "white";
                 })
                 element.style.backgroundColor = "rgb(209, 255, 232)";
+
+                currentSelection = element.textContent;
             })
         })
+    }
+
+    function getCurrentProject() {
+        return currentSelection;
     }
 
     // Store projects in local storage
@@ -225,7 +230,8 @@ const sidebarModule = (() => {
     }
 
     return {
-        startSidebar
+        startSidebar,
+        getCurrentProject
     }
 })();
 

@@ -46,13 +46,16 @@
 .delete {
     display: inline-block;
     width: 10%;
-    padding: 10px 0 10px 0;
+    padding: 22px 0 10px 0;
     color: transparent;
     background-image: url(trash.svg);
     background-repeat: no-repeat;
     background-size: 70% 70%;
     background-position: center;
     cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: transparent;
 }
 
 #new-project {
@@ -65,7 +68,6 @@
     width: auto;
 }
 
-
 #input-div {
     width: 75vw;
     max-width: 300px;
@@ -75,7 +77,6 @@
     margin: auto;
     cursor: auto;
 }
-
 
 #new-project-input {
     font-size: 1em;
@@ -132,13 +133,28 @@
     height: 60px;
 }
 
-
+/* New Todo button */
 #new-todo {
     text-align: center;
     height: 50px;
     margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
+    outline: 2px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+#new-todo-form {
+    display: none;
+    animation: fadeIn 0.7s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 #container {
