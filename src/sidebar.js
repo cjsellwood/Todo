@@ -47,6 +47,7 @@ const sidebarModule = (() => {
             // Delete project button
             const deleteBtn = document.createElement("button");
             deleteBtn.classList.add("delete");
+            deleteBtn.setAttribute("title", "Delete");
             addedProject.appendChild(deleteBtn, addedProject);
             
             const newBtn = document.getElementById("new-project");
@@ -103,11 +104,13 @@ const sidebarModule = (() => {
             // Submit button
             const projectSubmit = document.createElement("div");
             projectSubmit.id = "new-project-submit";
+            projectSubmit.setAttribute("title", "Save");
             inputDiv.appendChild(projectSubmit);
             
             // Cancel button
             const projectCancel = document.createElement("div");
             projectCancel.id = "new-project-cancel";
+            projectCancel.setAttribute("title", "Cancel");
             inputDiv.appendChild(projectCancel);
             
             const parent = document.getElementById("projects-list");
@@ -167,6 +170,7 @@ const sidebarModule = (() => {
                 // Delete project button
                 const deleteBtn = document.createElement("button");
                 deleteBtn.classList.add("delete");
+                deleteBtn.setAttribute("title", "Delete");
                 addedProject.appendChild(deleteBtn);      
                 
                 const inputDiv = document.getElementById("input-div");
@@ -211,7 +215,7 @@ const sidebarModule = (() => {
         Array.from(projectsArray).forEach(element => {
             element.addEventListener("click", function highlight() {
                 Array.from(projectsArray).forEach(i => {
-                    i.style.backgroundColor = "white";
+                    i.style.backgroundColor = "rgb(224, 235, 255)";
                 })
                 element.style.backgroundColor = "rgb(209, 255, 232)";
 

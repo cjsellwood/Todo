@@ -1,5 +1,12 @@
 import { sidebarModule } from './sidebar.js';
 
+// Create todo object with factory function 
+// Need title, description, dueDate, priority
+const todoFactory = (title, description, dueDate, color, priority, project) => {
+    return { title, description, dueDate, color, priority, project };
+}
+
+
 sidebarModule.startSidebar();
 
 // Allow adding new todo when pressing button
@@ -52,6 +59,11 @@ function submitNewTodo() {
         
         // Save todo object to todo array in local storage
         let todoArray = getTodoFromStorage();
+            // Create blank list if doesn't exist yet 
+        if (todoArray === null) {
+            todoArray = [];
+            addTodoToStorage(todoArray);
+        }
 
 
         // Values from new todo form
@@ -129,7 +141,7 @@ function render() {
     const container = document.getElementById("container");
     clearCurrentTodo(container);
     let project = sidebarModule.getCurrentProject();
-    const todoArray = getTodoFromStorage();
+    let todoArray = getTodoFromStorage();
     
     // Create blank list if doesn't exist yet 
     if (todoArray === null) {
@@ -158,19 +170,37 @@ function createTodoDiv(element) {
 
     const todoTitle = document.createElement("h4");
     todoTitle.textContent = element.title;
+    todoTitle.classList.add("todo-title");
     todo.appendChild(todoTitle);
-
-    const todoDescription = document.createElement("p");
-    todoDescription.textContent = element.description;
-    todo.appendChild(todoDescription);
 
     const todoDate = document.createElement("p");
     todoDate.textContent = element.dueDate;
+    todoDate.classList.add("todo-date");
     todo.appendChild(todoDate);
+
+    const todoDescription = document.createElement("p");
+    todoDescription.textContent = element.description;
+    todoDescription.classList.add("todo-description")
+    todo.appendChild(todoDescription);
 
     const todoPriority = document.createElement("p");
     todoPriority.textContent = element.priority;
+    todoPriority.classList.add("todo-priority");
     todo.appendChild(todoPriority);
+
+
+    const buttons = document.createElement("div");
+
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("edit-button");
+    buttons.appendChild(editBtn);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-button");
+    deleteBtn.setAttribute("title", "Delete")
+
+    buttons.appendChild(deleteBtn);
+    todo.appendChild(buttons);
 
     todo.style.backgroundColor = element.color;
     todo.classList.add("grid-item");
@@ -189,10 +219,5 @@ function clearCurrentTodo(parent) {
 
 
 
-// Create todo object with factory function 
-// Need title, description, dueDate, priority
-const todoFactory = (title, description, dueDate, color, priority, project) => {
-    return { title, description, dueDate, color, priority, project };
-}
 
 export { render }
