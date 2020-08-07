@@ -1,16 +1,27 @@
+import { render } from "./index.js"
+
 const sidebarModule = (() => {
     // Allows opening and closing of sidebar on mobile
     function controlSidebar() {
         const openSidebar = document.getElementById("open-sidebar");
         const sidebar = document.getElementById("sidebar");
+        const darkened = document.getElementById("darkened");
         openSidebar.addEventListener('click', () => {
             sidebar.style.width = "80vw";
+            darkened.style.display = "block";
         })
         
         const closeSidebar = document.getElementById("close-sidebar");
         closeSidebar.addEventListener('click', () => {
             sidebar.style.width = "0px";
+            darkened.style.display = "none";
         })
+        // Darken other side of sidebar
+        darkened.addEventListener('click', () => {
+            darkened.style.display = "none";
+            sidebar.style.width = "0px";
+        })
+
     }
 
     // Add starting projects to list
@@ -205,6 +216,7 @@ const sidebarModule = (() => {
                 element.style.backgroundColor = "rgb(209, 255, 232)";
 
                 currentSelection = element.textContent;
+                render();
             })
         })
     }
@@ -222,6 +234,9 @@ const sidebarModule = (() => {
     function getProjectsFromStorage() {
         return JSON.parse(window.localStorage.getItem('projects'));
     }
+
+
+
 
     function startSidebar() {
         controlSidebar();
