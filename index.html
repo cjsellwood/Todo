@@ -8,6 +8,9 @@
         
     </head>
     <body>
+        <div id="darkened">
+            
+        </div>
         <div id="sidebar">
             <img id="close-sidebar" src="x.svg" alt="close sidebar">
             <div id="projects-list">
@@ -20,14 +23,14 @@
             <p>New Todo</p>
             <form id="new-todo-form">
                 <label>Title</label><br>
-                <input type="text"><br>
+                <input type="text" id="title-input"><br>
                 <label>Description</label><br>
-                <textarea></textarea><br>
+                <textarea id="description-input"></textarea><br>
                 <label>Due Date</label><br>
                 <input id="date-input" type="date"><br>
                 <label>Priority</label><br>
-                <select>
-                    <option value="low">Low</option>
+                <select id="priority-input">
+                    <option value="low" id="select-default">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
                 </select><br>
@@ -36,46 +39,6 @@
             </form>
         </div>
         <div id="container">
-            <div class="grid-item">
-                <h3 style="text-align: center;">Title</h3>
-                <p>Description Can be a lot longer and will tell you about the task specified for this todo note. Can be as long as you like, it will wrap around as necessary.</p>
-                <h4 style="display: inline;">Due: 14/06/2020</h4>
-                <p style="display: inline; outline: 2px solid red;">Priority: High</p>
-            </div >
-            <div class="grid-item">
-                2
-                <div>d</div><div>d</div>
-                <div>d</div>
-                <div>d</div>
-                <div>dffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</div>
-                <div>d</div>
-                <div>d</div>
-                <div>d</div>
-            </div >
-            <div class="grid-item">
-                <h3 style="text-align: center;">Title</h3>
-                <p>Description </p>
-                <h4 style="display: inline;">14/06/2020</h4>
-                <p style="display: inline;">Priority: High</p>
-            </div >
-            <div class="grid-item">
-                4
-            </div >
-            <div class="grid-item">
-                5
-            </div >
-            <div class="grid-item">
-                <div>d</div>
-                <div>d</div>
-                <div>d</div>
-                <div>d</div>
-                <div>d</div>
-                <div>d</div>
-                6
-            </div >
-            <div class="grid-item">
-                7
-            </div >
         </div>
 
 
