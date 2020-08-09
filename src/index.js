@@ -86,12 +86,7 @@ function submitNewTodo() {
             title.style.borderBottom = "2px solid black";
         } else {
             // Format date
-            let date = new Date(dueDate.value);
-            const months = ["Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul",
-                            "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-            let formattedDate = `${date.getDate()} ${months[date.getMonth()]}` +
-                            ` ${date.getFullYear()}`;
+            const formattedDate = formatDate(dueDate);
 
             // Assign random color to individual todo
             let color = `hsl(${Math.random() * 360}, 100%, 85%)`;
@@ -187,7 +182,7 @@ function addDeleteTodo(deleteBtn, todo) {
 function addEditTodo(editBtn, todo) {
     editBtn.addEventListener("click", () => {
         // Clear all nodes from todo item
-        todo.querySelectorAll("*").forEach(element => element.remove());
+        clearCurrentTodo(todo)
 
         const index = todo.getAttribute("data-index");
         let todoArray = getTodoFromStorage();
@@ -195,7 +190,7 @@ function addEditTodo(editBtn, todo) {
         // Create form layout with values already filled in
         const editForm = document.createElement("form");
         editForm.classList.add("edit-todo-form");
-        editForm.setAttribute("data-index", "index");
+        editForm.setAttribute("data-index", index);
 
         const titleLabel = document.createElement("label");
         titleLabel.textContent = "Title";
@@ -203,6 +198,7 @@ function addEditTodo(editBtn, todo) {
         editForm.appendChild(document.createElement("br"));
 
         const titleInput = document.createElement("input");
+        titleInput.classList.add("edit-title");
         titleInput.setAttribute("type", "text");
         titleInput.value = todoArray[index].title;
         editForm.appendChild(titleInput);
@@ -214,6 +210,7 @@ function addEditTodo(editBtn, todo) {
         editForm.appendChild(document.createElement("br"));
 
         const descriptionInput = document.createElement("textarea");
+        descriptionInput.classList.add("edit-description");
         descriptionInput.textContent = todoArray[index].description;
         editForm.appendChild(descriptionInput);
         editForm.appendChild(document.createElement("br"));
@@ -224,6 +221,7 @@ function addEditTodo(editBtn, todo) {
 
         // Set date by first formatting
         const dateInput = document.createElement("input");
+        dateInput.classList.add("edit-date");
         let formattedDate = new Date(todoArray[index].dueDate);
         let dates = formattedDate.toLocaleDateString().split("/");
         dateInput.defaultValue = `${dates[2]}-${dates[1]}-${dates[0]}`;
@@ -233,11 +231,12 @@ function addEditTodo(editBtn, todo) {
         editForm.appendChild(document.createElement("br"));
 
         const priorityLabel = document.createElement("label");
-        priorityLabel.textContent = "Label";
+        priorityLabel.textContent = "Priority";
         editForm.appendChild(priorityLabel);
         editForm.appendChild(document.createElement("br"));
 
         const select = document.createElement("select");
+        select.classList.add("edit-priority");
 
         const optionLow = document.createElement("option");
         optionLow.setAttribute("value", "Low");
@@ -275,7 +274,57 @@ function addEditTodo(editBtn, todo) {
 
         todo.appendChild(editForm);
 
+        // Add cancel button functionality
+        cancelBtn.addEventListener("click", () => {
+            // Replace todo form with new div
+            const replacementTodo = createTodoDiv(todoArray[index], index);
+            todo.parentNode.replaceChild(replacementTodo, todo);
+        })
+
+        // Add submit button functionality
+        submitBtn.addEventListener("click", () => {
+            const updatedForm = document.querySelector(`form[data-index="${index}"]`);
+
+            // Update todo with entered values
+            const title = updatedForm.querySelector(".edit-title");
+            const description = updatedForm.querySelector(".edit-description");
+            const dueDate = updatedForm.querySelector(".edit-date");
+            const priority = updatedForm.querySelector(".edit-priority");
+
+            // Allow no description and default priority as low
+            if (title.value === "") {
+                title.style.borderBottom = "2px solid red";
+                title.setAttribute("placeholder", "Title Required");
+
+            } else if (dueDate.value === "") {
+                dueDate.style.borderBottom = "2px solid red";
+                dueDate.setAttribute("placeholder", "Date Required");
+                title.style.borderBottom = "2px solid black";
+            } else {
+                // Format date
+                todoArray[index].title = title.value;
+                todoArray[index].description = description.value;
+                todoArray[index].dueDate = formatDate(dueDate);
+                todoArray[index].priority = priority.value;
+                addTodoToStorage(todoArray);
+    
+                // Replace todo form with new div
+                const replacementTodo = createTodoDiv(todoArray[index], index);
+                todo.parentNode.replaceChild(replacementTodo, todo);
+            }
+        })
+
     })
+}
+
+function formatDate(inputDate) {
+    let date = new Date(inputDate.value);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul",
+                    "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    let formattedDate = `${date.getDate()} ${months[date.getMonth()]}` +
+                    ` ${date.getFullYear()}`;
+    return formattedDate;
 }
 
 // Create div element with todo details inside
@@ -299,7 +348,6 @@ function createTodoDiv(element, i) {
     todo.appendChild(todoDescription);
 
     const todoPriority = document.createElement("p");
-    // todoPriority.textContent = element.priority;
     todoPriority.classList.add("todo-priority");
     todo.appendChild(todoPriority);
 
@@ -325,7 +373,6 @@ function createTodoDiv(element, i) {
     // Make edit and delete button functional
     addEditTodo(editBtn, todo);
     addDeleteTodo(deleteBtn, todo);
-
 
     buttons.appendChild(deleteBtn);
     todo.appendChild(buttons);

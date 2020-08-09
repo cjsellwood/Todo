@@ -1,16 +1,20 @@
+:root {
+    --backgroundColor: rgb(255, 255, 255);
+}
+
 * {
     margin: 0;
     font-family: Helvetica, sans-serif;
 }
 
 html {
-    background-color: rgb(224, 235, 255);
+    background-color: var(--backgroundColor);
 }
 
 #darkened {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.493);
+    background-color: rgba(0, 0, 0, 0.657);
     position: fixed;
     top: 0;
     left: 0;
@@ -20,7 +24,7 @@ html {
 }
 
 #sidebar {
-    background-color: rgb(224, 235, 255);
+    background-color: var(--backgroundColor);
     border-right: 2px solid rgb(0, 0, 0);
     width: 0;
     height: 100vh;
@@ -179,7 +183,7 @@ html {
     margin-right: 15px;
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(224, 235, 255);
+    background-color: var(--backgroundColor);
 }
 
 .grid-item {
