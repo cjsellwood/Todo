@@ -1,5 +1,5 @@
 :root {
-    --backgroundColor: rgb(255, 255, 255);
+    --backgroundColor: rgb(245, 245, 245);
 }
 
 * {
@@ -25,7 +25,7 @@ html {
 
 #sidebar {
     background-color: var(--backgroundColor);
-    border-right: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(163, 163, 163);
     width: 0;
     height: 100vh;
     position: fixed;
@@ -241,13 +241,6 @@ html {
     cursor: pointer;
     margin-top: 20px;
 }
-
-/* Edit todo form */
-.edit-todo-form {
-    display: block;
-    animation: fadeIn 0.7s ease-out;
-}
-
 
 
 @media only screen and (min-width: 800px) {

@@ -388,10 +388,69 @@ function clearCurrentTodo(parent) {
     parent.querySelectorAll("*").forEach(element => element.remove());
 }
 
+// Sort by Priority button
+function sortByPriority() {
+    const sortBtn = document.getElementById("sort-priority");
+    sortBtn.addEventListener("click", () => {
+        let array = getTodoFromStorage();
+        let newArray = [];
+        console.log(array);
+        // Sort By Priority
+        array.forEach(element => {
+            if (element.priority === "High") {
+                newArray.push(element);
+            }
+        })
+        array.forEach(element => {
+            if (element.priority === "Medium") {
+                newArray.push(element);
+            }
+        })
+        array.forEach(element => {
+            if (element.priority === "Low") {
+                newArray.push(element);
+            }
+        })
+
+        console.log(newArray);
+        if (array.every((val, index) => val === newArray[index])) {
+            console.log("equal");
+            newArray.reverse();
+        }
+        
+        addTodoToStorage(newArray);
+        render();
+    });
+    
+
+}
+
+sortByPriority();
+
+// Sort by date button
+function sortByDate() {
+    const sortBtn = document.getElementById("sort-date");
+    sortBtn.addEventListener("click", () => {
+        let array = getTodoFromStorage();
+        let newArray = [...array];
+        console.log(array);
+        // Sort by date
+        newArray.sort(function(a, b) {
+            return new Date(a.dueDate) - new Date(b.dueDate);
+        })
+
+        if (array.every((val, index) => val === newArray[index])) {
+            console.log("equal");
+            newArray.reverse();
+        }
+        console.log(newArray);
+        addTodoToStorage(newArray);
+        render();
+    });
+}
 
 
-
-
+sortByDate();
 
 
 

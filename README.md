@@ -1,1 +1,1 @@
-A todo list web app.
+A todo list web app. Supports separation of todo items into separate projects or all can be viewed simultaneously. Todo items can be individually edited or deleted. The todo items are specified by title, description, due date and priority.
