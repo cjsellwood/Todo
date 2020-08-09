@@ -175,15 +175,15 @@ html {
 
 /* Main grid of todo items */
 #container {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
     display: flex;
     flex-wrap: wrap;
     background-color: rgb(224, 235, 255);
 }
 
 .grid-item {
-    margin: 10px 0 10px 0;
+    margin: 20px 0 10px 0;
     min-width: 100%;
     overflow: hidden;
     box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
@@ -199,7 +199,6 @@ html {
 }
 
 .todo-title {
-    
     font-size: 1.5em;
 }
 
@@ -211,11 +210,6 @@ html {
     line-height: 25px;
 }
 
-.todo-priority {
-    font-size: 1.2em;
-    font-weight: 800;
-
-}
 .edit-button {
     background-image: url(edit.svg);
     background-repeat: no-repeat;
@@ -244,7 +238,11 @@ html {
     margin-top: 20px;
 }
 
-
+/* Edit todo form */
+#edit-todo-form {
+    display: block;
+    animation: fadeIn 0.7s ease-out;
+}
 
 
 

@@ -250,7 +250,9 @@ const sidebarModule = (() => {
 
     return {
         startSidebar,
-        getCurrentProject
+        getCurrentProject,
+        addProjectsToStorage,
+        getProjectsFromStorage
     }
 })();
 

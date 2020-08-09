@@ -59,12 +59,12 @@ function submitNewTodo() {
         
         // Save todo object to todo array in local storage
         let todoArray = getTodoFromStorage();
-            // Create blank list if doesn't exist yet 
+
+        // Create blank list if doesn't exist yet 
         if (todoArray === null) {
             todoArray = [];
             addTodoToStorage(todoArray);
         }
-
 
         // Values from new todo form
         const title = document.getElementById("title-input");
@@ -134,6 +134,8 @@ function setMinDate() {
     const date = new Date();
     let formattedDate = date.toISOString().split('T')[0];
     dateInput.setAttribute("min", formattedDate);
+    const editDateInput = document.getElementById("edit-date-input");
+    editDateInput.setAttribute("min", formattedDate);
 }
 
 // Render todo items in grid
@@ -149,24 +151,78 @@ function render() {
         addTodoToStorage(todoArray);
     }
 
-    todoArray.forEach(element => {
+    todoArray.forEach((element, i) => {
         // Display all todo items
         if (project === "All") {
-            const todo = createTodoDiv(element);
+            const todo = createTodoDiv(element, i);
             container.appendChild(todo);
         } else {
             // Display only todo items with selected project
             if (element.project === project) {
-                const todo = createTodoDiv(element);
+                const todo = createTodoDiv(element, i);
                 container.appendChild(todo);
             }
         }
     })
 }
 
+// Delete todo from both storage and display
+function addDeleteTodo(deleteBtn, todo) {
+    deleteBtn.addEventListener("click", () => {
+        // Remove todo from display
+        console.log(todo);
+        todo.remove();
+
+        // Delete corresponding projects from array with the index from todo
+        const index = todo.getAttribute("data-index");
+        console.log(index);
+
+        let projects = getTodoFromStorage();
+        projects.splice(index, 1);
+        addTodoToStorage(projects);
+    })
+}
+
+// Edit todo in storage and display
+function addEditTodo(editBtn, todo) {
+    editBtn.addEventListener("click", () => {
+        // Clear all nodes from todo item
+        console.log(todo);
+        todo.querySelectorAll("*").forEach(element => element.remove());
+
+        const index = todo.getAttribute("data-index");
+
+        const editForm = document.getElementById("edit-todo-form");
+        editForm.style.display = "block";
+
+        let todoArray = getTodoFromStorage();
+
+        const editTitle = document.getElementById("edit-title-input");
+        editTitle.value = todoArray[index].title;
+
+        const editDescription = document.getElementById("edit-description-input");
+        editDescription.value = todoArray[index].description;
+
+        // Set date by first formatting
+        const editDueDate = document.getElementById("edit-date-input");
+        let formattedDate = new Date(todoArray[index].dueDate)
+        let dates = formattedDate.toLocaleDateString().split("/");
+        editDueDate.defaultValue = `${dates[2]}-${dates[1]}-${dates[0]}`;
+
+        
+
+
+        console.log(editForm);
+        todo.appendChild(editForm);
+
+
+    })
+}
+
 // Create div element with todo details inside
-function createTodoDiv(element) {
+function createTodoDiv(element, i) {
     const todo = document.createElement("div");
+    todo.setAttribute("data-index", i);
 
     const todoTitle = document.createElement("h4");
     todoTitle.textContent = element.title;
@@ -184,10 +240,18 @@ function createTodoDiv(element) {
     todo.appendChild(todoDescription);
 
     const todoPriority = document.createElement("p");
-    todoPriority.textContent = element.priority;
+    // todoPriority.textContent = element.priority;
     todoPriority.classList.add("todo-priority");
     todo.appendChild(todoPriority);
 
+    // Set top border color based on priority
+    if (element.priority === "Low") {
+        todo.style.borderTop = "8px solid #00c220";
+    } else if (element.priority === "Medium") {
+        todo.style.borderTop = "8px solid #fce803";
+    } else {
+        todo.style.borderTop = "8px solid red";
+    }
 
     const buttons = document.createElement("div");
 
@@ -197,7 +261,12 @@ function createTodoDiv(element) {
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete-button");
-    deleteBtn.setAttribute("title", "Delete")
+    deleteBtn.setAttribute("title", "Delete");
+
+    // Make edit and delete button functional
+    addEditTodo(editBtn, todo);
+    addDeleteTodo(deleteBtn, todo);
+
 
     buttons.appendChild(deleteBtn);
     todo.appendChild(buttons);
