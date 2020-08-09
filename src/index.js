@@ -215,6 +215,7 @@ function addEditTodo(editBtn, todo) {
 
         const descriptionInput = document.createElement("textarea");
         descriptionInput.textContent = todoArray[index].description;
+        editForm.appendChild(descriptionInput);
         editForm.appendChild(document.createElement("br"));
 
         const dateLabel = document.createElement("label");
