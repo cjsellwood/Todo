@@ -239,7 +239,7 @@ html {
 }
 
 /* Edit todo form */
-#edit-todo-form {
+.edit-todo-form {
     display: block;
     animation: fadeIn 0.7s ease-out;
 }
