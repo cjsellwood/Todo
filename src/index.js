@@ -12,7 +12,10 @@ sidebarModule.startSidebar();
 // Allow adding new todo when pressing button
 function newTodo() {
     const newTodoBtn = document.getElementById("new-todo");
-    setMinDate();
+
+    const dateInput = document.getElementById("date-input");
+    setMinDate(dateInput);
+
     newTodoBtn.addEventListener("click", () => {
         newTodoBtn.style.height = "500px";
         const newTodoText = newTodoBtn.getElementsByTagName("p")[0];
@@ -129,13 +132,10 @@ function getTodoFromStorage() {
 
 
 // Stop selection of dates before today
-function setMinDate() {
-    const dateInput = document.getElementById("date-input");
+function setMinDate(dateInput) {
     const date = new Date();
     let formattedDate = date.toISOString().split('T')[0];
     dateInput.setAttribute("min", formattedDate);
-    const editDateInput = document.getElementById("edit-date-input");
-    editDateInput.setAttribute("min", formattedDate);
 }
 
 // Render todo items in grid
@@ -187,34 +187,92 @@ function addDeleteTodo(deleteBtn, todo) {
 function addEditTodo(editBtn, todo) {
     editBtn.addEventListener("click", () => {
         // Clear all nodes from todo item
-        console.log(todo);
         todo.querySelectorAll("*").forEach(element => element.remove());
 
         const index = todo.getAttribute("data-index");
-
-        const editForm = document.getElementById("edit-todo-form");
-        editForm.style.display = "block";
-
         let todoArray = getTodoFromStorage();
 
-        const editTitle = document.getElementById("edit-title-input");
-        editTitle.value = todoArray[index].title;
+        // Create form layout with values already filled in
+        const editForm = document.createElement("form");
+        editForm.classList.add("edit-todo-form");
+        editForm.setAttribute("data-index", "index");
 
-        const editDescription = document.getElementById("edit-description-input");
-        editDescription.value = todoArray[index].description;
+        const titleLabel = document.createElement("label");
+        titleLabel.textContent = "Title";
+        editForm.appendChild(titleLabel);
+        editForm.appendChild(document.createElement("br"));
+
+        const titleInput = document.createElement("input");
+        titleInput.setAttribute("type", "text");
+        titleInput.value = todoArray[index].title;
+        editForm.appendChild(titleInput);
+        editForm.appendChild(document.createElement("br"));
+
+        const descriptionLabel = document.createElement("label");
+        descriptionLabel.textContent = "Description";
+        editForm.appendChild(descriptionLabel);
+        editForm.appendChild(document.createElement("br"));
+
+        const descriptionInput = document.createElement("textarea");
+        descriptionInput.textContent = todoArray[index].description;
+        editForm.appendChild(document.createElement("br"));
+
+        const dateLabel = document.createElement("label");
+        dateLabel.textContent = "Due Date";
+        editForm.appendChild(document.createElement("br"));
 
         // Set date by first formatting
-        const editDueDate = document.getElementById("edit-date-input");
-        let formattedDate = new Date(todoArray[index].dueDate)
+        const dateInput = document.createElement("input");
+        let formattedDate = new Date(todoArray[index].dueDate);
         let dates = formattedDate.toLocaleDateString().split("/");
-        editDueDate.defaultValue = `${dates[2]}-${dates[1]}-${dates[0]}`;
+        dateInput.defaultValue = `${dates[2]}-${dates[1]}-${dates[0]}`;
+        setMinDate(dateInput);
+        dateInput.setAttribute("type", "date");
+        editForm.appendChild(dateInput);
+        editForm.appendChild(document.createElement("br"));
 
-        
+        const priorityLabel = document.createElement("label");
+        priorityLabel.textContent = "Label";
+        editForm.appendChild(priorityLabel);
+        editForm.appendChild(document.createElement("br"));
 
+        const select = document.createElement("select");
 
-        console.log(editForm);
+        const optionLow = document.createElement("option");
+        optionLow.setAttribute("value", "Low");
+        optionLow.textContent = "Low";
+        select.appendChild(optionLow);
+
+        const optionMedium = document.createElement("option");
+        optionMedium.setAttribute("value", "Medium");
+        optionMedium.textContent = "Medium";
+        if (todoArray[index].priority === "Medium") {
+            optionMedium.setAttribute("selected", "selected");
+        }
+        select.appendChild(optionMedium);
+
+        const optionHigh = document.createElement("option");
+        optionHigh.setAttribute("value", "High");
+        optionHigh.textContent = "High";
+        if (todoArray[index].priority === "High") {
+            optionHigh.setAttribute("selected", "selected");
+        }
+        select.appendChild(optionHigh);
+
+        editForm.appendChild(select);
+        editForm.appendChild(document.createElement("br"));
+
+        const submitBtn = document.createElement("button");
+        submitBtn.setAttribute("type", "button");
+        submitBtn.textContent = "Submit";
+        editForm.appendChild(submitBtn);
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.setAttribute("type", "button");
+        cancelBtn.textContent = "Cancel";
+        editForm.appendChild(cancelBtn);
+
         todo.appendChild(editForm);
-
 
     })
 }
