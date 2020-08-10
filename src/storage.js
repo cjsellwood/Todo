@@ -6,7 +6,13 @@ const storage = (() => {
     
     // Retrieve projects from local storage
     function getFromStorage(item) {
-        return JSON.parse(window.localStorage.getItem(item));
+        let returnArray = JSON.parse(window.localStorage.getItem(item));
+
+        // Create blank list if doesn't exist yet 
+        if (returnArray === null) {
+            returnArray = [];
+        }
+        return returnArray;
     }
 
     return {

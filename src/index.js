@@ -1,22 +1,17 @@
 import { sidebarModule } from './sidebar.js';
 import { storage } from './storage.js';
 
-// Create todo object with factory function 
-// Need title, description, dueDate, priority
-const todoFactory = (title, description, dueDate, color, priority, project) => {
-    return { title, description, dueDate, color, priority, project };
-}
 
 
-sidebarModule.startSidebar();
+
 
 // Allow adding new todo when pressing button
 function newTodo() {
     const newTodoBtn = document.getElementById("new-todo");
-
     const dateInput = document.getElementById("date-input");
     setMinDate(dateInput);
 
+    // Add color change on hover
     newTodoBtn.addEventListener("mouseover", newTodoHover)
     newTodoBtn.addEventListener("mouseleave", () => {
         newTodoBtn.style.backgroundColor = "rgb(0, 7, 93)";
@@ -41,8 +36,6 @@ function newTodoHover() {
     newTodoBtn.style.backgroundColor = "#3254a8";
     newTodoBtn.style.transition = "0s";
 }
-
-newTodo();
 
 // Cancel new todo form input
 function cancelNewTodo() {
@@ -80,8 +73,6 @@ function closeNewTodo() {
     newTodoBtn.addEventListener("mouseover", newTodoHover)
 }
 
-cancelNewTodo();
-
 // Submit form button
 function submitNewTodo() {
     const submitBtn = document.getElementById("submit-todo");
@@ -90,12 +81,6 @@ function submitNewTodo() {
         
         // Save todo object to todo array in local storage
         let todoArray = storage.getFromStorage('todo');
-
-        // Create blank list if doesn't exist yet 
-        if (todoArray === null) {
-            todoArray = [];
-            storage.addToStorage(todoArray, 'todo');
-        }
 
         // Values from new todo form
         const title = document.getElementById("title-input");
@@ -141,15 +126,22 @@ function submitNewTodo() {
     })
 }
 
-submitNewTodo();
-
-
-
 // Stop selection of dates before today
 function setMinDate(dateInput) {
     const date = new Date();
     let formattedDate = date.toISOString().split('T')[0];
     dateInput.setAttribute("min", formattedDate);
+}
+
+// Format date for display on todo items
+function formatDate(inputDate) {
+    let date = new Date(inputDate.value);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul",
+                    "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    let formattedDate = `${date.getDate()} ${months[date.getMonth()]}` +
+                    ` ${date.getFullYear()}`;
+    return formattedDate;
 }
 
 // Render todo items in grid
@@ -159,12 +151,6 @@ function render() {
     let project = sidebarModule.getCurrentProject();
     let todoArray = storage.getFromStorage('todo');
     
-    // Create blank list if doesn't exist yet 
-    if (todoArray === null) {
-        todoArray = [];
-        storage.addToStorage(todoArray, 'todo');
-    }
-
     todoArray.forEach((element, i) => {
         // Display all todo items
         if (project === "All") {
@@ -184,7 +170,6 @@ function render() {
 function addDeleteTodo(deleteBtn, todo) {
     deleteBtn.addEventListener("click", () => {
         // Remove todo from display
-        console.log(todo);
         todo.remove();
 
         // Delete corresponding projects from array with the index from todo
@@ -338,16 +323,6 @@ function addEditTodo(editBtn, todo) {
     })
 }
 
-function formatDate(inputDate) {
-    let date = new Date(inputDate.value);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul",
-                    "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    let formattedDate = `${date.getDate()} ${months[date.getMonth()]}` +
-                    ` ${date.getFullYear()}`;
-    return formattedDate;
-}
-
 // Create div element with todo details inside
 function createTodoDiv(element, i) {
     const todo = document.createElement("div");
@@ -403,8 +378,6 @@ function createTodoDiv(element, i) {
     return todo;
 }
 
-render();
-
 function clearCurrentTodo(parent) {
     parent.querySelectorAll("*").forEach(element => element.remove());
 }
@@ -440,11 +413,7 @@ function sortByPriority() {
         storage.addToStorage(newArray, 'todo');
         render();
     });
-    
-
 }
-
-sortByPriority();
 
 // Sort by date button
 function sortByDate() {
@@ -456,7 +425,7 @@ function sortByDate() {
         newArray.sort(function(a, b) {
             return new Date(a.dueDate) - new Date(b.dueDate);
         })
-
+        
         if (array.every((val, index) => val === newArray[index])) {
             console.log("equal");
             newArray.reverse();
@@ -466,6 +435,21 @@ function sortByDate() {
     });
 }
 
+
+
+// Create todo object with factory function 
+// Need title, description, dueDate, priority
+const todoFactory = (title, description, dueDate, color, priority, project) => {
+    return { title, description, dueDate, color, priority, project };
+}
+
+sidebarModule.startSidebar();
+
+newTodo();
+cancelNewTodo();
+submitNewTodo();
+render();
+sortByPriority();
 sortByDate();
 
 export { render }

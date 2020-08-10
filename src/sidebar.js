@@ -29,10 +29,6 @@ const sidebarModule = (() => {
     function addProjects() {
         // Get stored list of projects or set to empty if none exists
         let projects = storage.getFromStorage('projects');
-        if (projects === null) {
-            projects = [];
-            storage.addToStorage(projects, 'projects');
-        }
         const projectsList = document.getElementById("projects-list");
 
         for (let i = 0; i < projects.length; i++) {
