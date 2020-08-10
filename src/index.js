@@ -16,19 +16,29 @@ function newTodo() {
     const dateInput = document.getElementById("date-input");
     setMinDate(dateInput);
 
+    newTodoBtn.addEventListener("mouseover", newTodoHover)
+    newTodoBtn.addEventListener("mouseleave", () => {
+        newTodoBtn.style.backgroundColor = "rgb(0, 7, 93)";
+    })
+
     newTodoBtn.addEventListener("click", () => {
-        newTodoBtn.style.height = "500px";
+        newTodoBtn.style.height = "auto";
         const newTodoText = newTodoBtn.getElementsByTagName("p")[0];
         newTodoText.style.display = "none";
+        newTodoBtn.style.cursor = "auto";
+        newTodoBtn.style.backgroundColor = "rgb(0, 7, 93)";
+        newTodoBtn.removeEventListener("mouseover", newTodoHover)
 
         const newTodoForm = document.getElementById("new-todo-form");
         newTodoForm.style.display = "block";
-
-        console.log(sidebarModule.getCurrentProject())
-
-
     })
+}
 
+// Change color of new todo button on hover
+function newTodoHover() {
+    const newTodoBtn = document.getElementById("new-todo");
+    newTodoBtn.style.backgroundColor = "#3254a8";
+    newTodoBtn.style.transition = "0s";
 }
 
 newTodo();
@@ -39,6 +49,22 @@ function cancelNewTodo() {
     cancelBtn.addEventListener("click", () => {
         event.stopPropagation();
         closeNewTodo();
+
+        // Values from new todo form
+        const title = document.getElementById("title-input");
+        const description = document.getElementById("description-input");
+        const dueDate = document.getElementById("date-input");
+        const priority = document.getElementById("priority-input");
+
+        // Reset forms
+        title.value = "";
+        description.value = "";
+        dueDate.value = "";
+        const priorityDefault = document.getElementById("select-default");
+        priorityDefault.selected = "Low";
+        title.style.border = "1px solid white";
+        title.setAttribute("Placeholder", "");
+        dueDate.style.border = "1px solid white";
     })
 }
 
@@ -46,10 +72,12 @@ function cancelNewTodo() {
 function closeNewTodo() {
     const newTodoBtn = document.getElementById("new-todo");
     newTodoBtn.style.height = "50px";
+    newTodoBtn.style.cursor = "pointer";
     const newTodoText = newTodoBtn.getElementsByTagName("p")[0];
     newTodoText.style.display = "block";
     const newTodoForm = document.getElementById("new-todo-form");
     newTodoForm.style.display = "none";
+    newTodoBtn.addEventListener("mouseover", newTodoHover)
 }
 
 cancelNewTodo();
@@ -77,13 +105,12 @@ function submitNewTodo() {
 
         // Allow no description and default priority as low
         if (title.value === "") {
-            title.style.borderBottom = "2px solid red";
+            title.style.border = "1px solid red";
             title.setAttribute("placeholder", "Title Required");
 
         } else if (dueDate.value === "") {
-            dueDate.style.borderBottom = "2px solid red";
-            dueDate.setAttribute("placeholder", "Date Required");
-            title.style.borderBottom = "2px solid black";
+            dueDate.style.border = "1px solid red";
+            title.style.border = "1px solid white";
         } else {
             // Format date
             const formattedDate = formatDate(dueDate);
@@ -217,6 +244,7 @@ function addEditTodo(editBtn, todo) {
 
         const dateLabel = document.createElement("label");
         dateLabel.textContent = "Due Date";
+        editForm.appendChild(dateLabel);
         editForm.appendChild(document.createElement("br"));
 
         // Set date by first formatting
@@ -264,11 +292,13 @@ function addEditTodo(editBtn, todo) {
 
         const submitBtn = document.createElement("button");
         submitBtn.setAttribute("type", "button");
-        submitBtn.textContent = "Submit";
+        submitBtn.classList.add("edit-save");
+        submitBtn.textContent = "Save";
         editForm.appendChild(submitBtn);
 
         const cancelBtn = document.createElement("button");
         cancelBtn.setAttribute("type", "button");
+        cancelBtn.classList.add("edit-save");
         cancelBtn.textContent = "Cancel";
         editForm.appendChild(cancelBtn);
 
