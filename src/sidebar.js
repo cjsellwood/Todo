@@ -238,10 +238,7 @@ const sidebarModule = (() => {
     function getProjectsFromStorage() {
         return JSON.parse(window.localStorage.getItem('projects'));
     }
-
-
-
-
+    
     function startSidebar() {
         controlSidebar();
         newProject();

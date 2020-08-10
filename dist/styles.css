@@ -1,5 +1,5 @@
 :root {
-    --backgroundColor: #e4e4e4;
+    --backgroundColor: #dbf0ff;
 }
 
 * {
@@ -165,7 +165,6 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.5s;
     background-color: rgb(0, 7, 93);
     color: white;
     cursor: pointer;
@@ -174,14 +173,8 @@ html {
 
 #new-todo-form {
     display: none;
-    animation: fadeIn 0.7s ease-out;
     width: 500px;
     margin: 20px;
-}
-
-@keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
 }
 
 #title-input {
@@ -217,7 +210,7 @@ html {
     margin: 10px;
 }
 
-::-webkit-calendar-picker-indicator {
+#date-input::-webkit-calendar-picker-indicator {
     color: white;
     filter: invert();
 }
@@ -256,7 +249,7 @@ html {
     outline: none;
     border: none;
     cursor: pointer;
-    background-color: rgb(0, 7, 93);
+    background-color: rgb(0, 8, 93);
     color: white;
     margin: 2px;
     width: 40%;
@@ -267,28 +260,68 @@ html {
 }
 
 /* Edit todo */
+.edit-todo-form {
+    font-size: 1.4em;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+}
+
 .edit-title {
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+    font-size: 0.8em;
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
     margin: 10px;
+    width: 90%;
 }
 
 .edit-description {
+    background-color: rgba(0, 8, 93, 0);
+    outline: none;
+    border: none;
+    font-size: 0.8em;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     margin: 10px;
+    width: 90%;
+    height: 3.5em;
 }
 
 .edit-date {
+    background-color: rgba(0, 8, 93, 0);
+    outline: none;
+    border: none;
+    font-size: 0.8em;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     margin: 10px;
 }
 
 .edit-priority {
+    background-color: rgba(0, 8, 93, 0);
+    outline: none;
+    border: none;
+    font-size: 0.9em;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     margin: 10px;
 }
 
 .edit-save, .edit-cancel {
-    width: 50%;
-    outline: none;
+    font-size: 0.9em;
+    width: 40%;
+    height: 40px;
     border: none;
+    outline: none;
+    background-color: #3254a8;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
-
 
 /* Main grid of todo items */
 #container {

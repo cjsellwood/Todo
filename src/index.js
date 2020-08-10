@@ -107,6 +107,7 @@ function submitNewTodo() {
         if (title.value === "") {
             title.style.border = "1px solid red";
             title.setAttribute("placeholder", "Title Required");
+            dueDate.style.border = "1px solid white";
 
         } else if (dueDate.value === "") {
             dueDate.style.border = "1px solid red";
@@ -323,13 +324,13 @@ function addEditTodo(editBtn, todo) {
 
             // Allow no description and default priority as low
             if (title.value === "") {
-                title.style.borderBottom = "2px solid red";
+                title.style.border = "1px solid red";
                 title.setAttribute("placeholder", "Title Required");
+                dueDate.style.border = "1px solid black";
 
             } else if (dueDate.value === "") {
-                dueDate.style.borderBottom = "2px solid red";
-                dueDate.setAttribute("placeholder", "Date Required");
-                title.style.borderBottom = "2px solid black";
+                dueDate.style.border = "1px solid red";
+                title.style.border = "1px solid black";
             } else {
                 // Format date
                 todoArray[index].title = title.value;
@@ -343,7 +344,6 @@ function addEditTodo(editBtn, todo) {
                 todo.parentNode.replaceChild(replacementTodo, todo);
             }
         })
-
     })
 }
 
@@ -475,9 +475,6 @@ function sortByDate() {
     });
 }
 
-
 sortByDate();
-
-
 
 export { render }
