@@ -1,4 +1,5 @@
 import { sidebarModule } from './sidebar.js';
+import { storage } from './storage.js';
 
 // Create todo object with factory function 
 // Need title, description, dueDate, priority
@@ -54,7 +55,6 @@ function cancelNewTodo() {
         const title = document.getElementById("title-input");
         const description = document.getElementById("description-input");
         const dueDate = document.getElementById("date-input");
-        const priority = document.getElementById("priority-input");
 
         // Reset forms
         title.value = "";
@@ -89,12 +89,12 @@ function submitNewTodo() {
         event.stopPropagation();
         
         // Save todo object to todo array in local storage
-        let todoArray = getTodoFromStorage();
+        let todoArray = storage.getFromStorage('todo');
 
         // Create blank list if doesn't exist yet 
         if (todoArray === null) {
             todoArray = [];
-            addTodoToStorage(todoArray);
+            storage.addToStorage(todoArray, 'todo');
         }
 
         // Values from new todo form
@@ -132,7 +132,7 @@ function submitNewTodo() {
             priorityDefault.selected = "Low";
 
             todoArray.push(newTodo);
-            addTodoToStorage(todoArray);
+            storage.addToStorage(todoArray, 'todo');
     
             closeNewTodo();
             render();
@@ -143,15 +143,6 @@ function submitNewTodo() {
 
 submitNewTodo();
 
-// Store projects in local storage
-function addTodoToStorage(array) {
-    window.localStorage.setItem('todo', JSON.stringify(array));
-}
-
-// Retrieve projects from local storage
-function getTodoFromStorage() {
-    return JSON.parse(window.localStorage.getItem('todo'));
-}
 
 
 // Stop selection of dates before today
@@ -166,12 +157,12 @@ function render() {
     const container = document.getElementById("container");
     clearCurrentTodo(container);
     let project = sidebarModule.getCurrentProject();
-    let todoArray = getTodoFromStorage();
+    let todoArray = storage.getFromStorage('todo');
     
     // Create blank list if doesn't exist yet 
     if (todoArray === null) {
         todoArray = [];
-        addTodoToStorage(todoArray);
+        storage.addToStorage(todoArray, 'todo');
     }
 
     todoArray.forEach((element, i) => {
@@ -200,9 +191,9 @@ function addDeleteTodo(deleteBtn, todo) {
         const index = todo.getAttribute("data-index");
         console.log(index);
 
-        let projects = getTodoFromStorage();
+        let projects = storage.getFromStorage('todo');
         projects.splice(index, 1);
-        addTodoToStorage(projects);
+        storage.addToStorage(projects, 'todo');
     })
 }
 
@@ -213,7 +204,7 @@ function addEditTodo(editBtn, todo) {
         clearCurrentTodo(todo)
 
         const index = todo.getAttribute("data-index");
-        let todoArray = getTodoFromStorage();
+        let todoArray = storage.getFromStorage('todo');
 
         // Create form layout with values already filled in
         const editForm = document.createElement("form");
@@ -337,7 +328,7 @@ function addEditTodo(editBtn, todo) {
                 todoArray[index].description = description.value;
                 todoArray[index].dueDate = formatDate(dueDate);
                 todoArray[index].priority = priority.value;
-                addTodoToStorage(todoArray);
+                storage.addToStorage(todoArray, 'todo');
     
                 // Replace todo form with new div
                 const replacementTodo = createTodoDiv(todoArray[index], index);
@@ -422,7 +413,7 @@ function clearCurrentTodo(parent) {
 function sortByPriority() {
     const sortBtn = document.getElementById("sort-priority");
     sortBtn.addEventListener("click", () => {
-        let array = getTodoFromStorage();
+        let array = storage.getFromStorage('todo');
         let newArray = [];
         // Sort By Priority
         array.forEach(element => {
@@ -446,7 +437,7 @@ function sortByPriority() {
             newArray.reverse();
         }
         
-        addTodoToStorage(newArray);
+        storage.addToStorage(newArray, 'todo');
         render();
     });
     
@@ -459,7 +450,7 @@ sortByPriority();
 function sortByDate() {
     const sortBtn = document.getElementById("sort-date");
     sortBtn.addEventListener("click", () => {
-        let array = getTodoFromStorage();
+        let array = storage.getFromStorage('todo');
         let newArray = [...array];
         // Sort by date
         newArray.sort(function(a, b) {
@@ -470,7 +461,7 @@ function sortByDate() {
             console.log("equal");
             newArray.reverse();
         }
-        addTodoToStorage(newArray);
+        storage.addToStorage(newArray, 'todo');
         render();
     });
 }

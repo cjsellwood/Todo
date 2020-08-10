@@ -1,4 +1,5 @@
-import { render } from "./index.js"
+import { render } from "./index.js";
+import { storage } from './storage.js';
 
 const sidebarModule = (() => {
     // Allows opening and closing of sidebar on mobile
@@ -27,10 +28,10 @@ const sidebarModule = (() => {
     // Add starting projects to list
     function addProjects() {
         // Get stored list of projects or set to empty if none exists
-        let projects = getProjectsFromStorage();
+        let projects = storage.getFromStorage('projects');
         if (projects === null) {
             projects = [];
-            addProjectsToStorage(projects);
+            storage.addToStorage(projects, 'projects');
         }
         const projectsList = document.getElementById("projects-list");
 
@@ -69,7 +70,7 @@ const sidebarModule = (() => {
             let projects = getProjectsFromStorage();
             const removedIndex = projects.indexOf(removed);
             projects.splice(removedIndex, 1);
-            addProjectsToStorage(projects);
+            storage.addToStorage(projects, 'projects');
 
             // If input is open delete it to so that name can be same as deleted
             const inputDiv = document.getElementById("input-div");
@@ -189,9 +190,9 @@ const sidebarModule = (() => {
 
 
                 // Add to local storage of projects
-                let projects = getProjectsFromStorage();
+                let projects = storage.getFromStorage('projects');
                 projects.push(text);
-                addProjectsToStorage(projects);
+                storage.addToStorage(projects, 'projects');
 
                 // Allow selection of new projects
                 addHighlight()
@@ -229,16 +230,6 @@ const sidebarModule = (() => {
         return currentSelection;
     }
 
-    // Store projects in local storage
-    function addProjectsToStorage(array) {
-        window.localStorage.setItem('projects', JSON.stringify(array));
-    }
-
-    // Retrieve projects from local storage
-    function getProjectsFromStorage() {
-        return JSON.parse(window.localStorage.getItem('projects'));
-    }
-    
     function startSidebar() {
         controlSidebar();
         newProject();
@@ -248,8 +239,6 @@ const sidebarModule = (() => {
     return {
         startSidebar,
         getCurrentProject,
-        addProjectsToStorage,
-        getProjectsFromStorage
     }
 })();
 
