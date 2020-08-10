@@ -215,9 +215,9 @@ const sidebarModule = (() => {
         Array.from(projectsArray).forEach(element => {
             element.addEventListener("click", function highlight() {
                 Array.from(projectsArray).forEach(i => {
-                    i.style.backgroundColor = "rgb(255, 255, 255)";
+                    i.style.backgroundColor = "rgb(0, 7, 93)";
                 })
-                element.style.backgroundColor = "rgb(209, 255, 232)";
+                element.style.backgroundColor = "#3254a8";
 
                 currentSelection = element.textContent;
                 render();
