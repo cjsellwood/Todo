@@ -61,7 +61,7 @@ const helpers = (() => {
         newTodoText.style.display = "block";
         const newTodoForm = document.getElementById("new-todo-form");
         newTodoForm.style.display = "none";
-        newTodoBtn.addEventListener("mouseover", newTodoHover)
+        newTodoBtn.addEventListener("mouseover", newTodoHover);
     }
 
     // Cancel new todo form input

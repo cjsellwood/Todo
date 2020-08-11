@@ -2,8 +2,6 @@ import { sidebar } from './sidebar.js';
 import { storage } from './storage.js';
 import { helpers } from './helpers.js';
 
-
-
 // Submit form button
 function submitNewTodo() {
     const submitBtn = document.getElementById("submit-todo");
@@ -38,7 +36,7 @@ function submitNewTodo() {
             // Create new todo
             const newTodo = todoFactory(title.value, description.value,
                  formattedDate, color, priority.value, 
-                 sidebar.getCurrentProject())
+                 sidebar.getCurrentProject());
     
             // Reset forms
             title.value = "";
@@ -53,7 +51,6 @@ function submitNewTodo() {
             helpers.closeNewTodo();
             render();
         }
-
     })
 }
 
@@ -99,7 +96,7 @@ function addDeleteTodo(deleteBtn, todo) {
 function addEditTodo(editBtn, todo) {
     editBtn.addEventListener("click", () => {
         // Clear all nodes from todo item
-        helpers.clearCurrentTodo(todo)
+        helpers.clearCurrentTodo(todo);
 
         const index = todo.getAttribute("data-index");
         let todoArray = storage.getFromStorage('todo');
@@ -291,15 +288,12 @@ function createTodoDiv(element, i) {
     return todo;
 }
 
-
-
 // Sort by Priority button
 function sortByPriority() {
     const sortBtn = document.getElementById("sort-priority");
     sortBtn.addEventListener("click", () => {
         let array = storage.getFromStorage('todo');
         let newArray = [];
-        // Sort By Priority
         array.forEach(element => {
             if (element.priority === "High") {
                 newArray.push(element);
@@ -316,8 +310,8 @@ function sortByPriority() {
             }
         })
 
+        // If already sorted by priority, sort reverse priority
         if (array.every((val, index) => val === newArray[index])) {
-            console.log("equal");
             newArray.reverse();
         }
         
@@ -332,13 +326,12 @@ function sortByDate() {
     sortBtn.addEventListener("click", () => {
         let array = storage.getFromStorage('todo');
         let newArray = [...array];
-        // Sort by date
         newArray.sort(function(a, b) {
             return new Date(a.dueDate) - new Date(b.dueDate);
         })
-        
+
+        // If already sorted by date, sort reverse date
         if (array.every((val, index) => val === newArray[index])) {
-            console.log("equal");
             newArray.reverse();
         }
         storage.addToStorage(newArray, 'todo');
@@ -346,16 +339,12 @@ function sortByDate() {
     });
 }
 
-
-
 // Create todo object with factory function 
-// Need title, description, dueDate, priority
 const todoFactory = (title, description, dueDate, color, priority, project) => {
     return { title, description, dueDate, color, priority, project };
 }
 
 sidebar.startSidebar();
-
 helpers.startHelpers();
 
 submitNewTodo();

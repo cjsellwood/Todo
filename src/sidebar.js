@@ -22,7 +22,6 @@ const sidebar = (() => {
             darkened.style.display = "none";
             sidebar.style.width = "0px";
         })
-
     }
 
     // Add starting projects to list
@@ -48,7 +47,6 @@ const sidebar = (() => {
             addedProject.appendChild(deleteBtn, addedProject);
             
             const newBtn = document.getElementById("new-project");
-
             projectsList.insertBefore(addedProject, newBtn);
 
             addDeleteBtn(deleteBtn, addedProject);
@@ -76,7 +74,6 @@ const sidebar = (() => {
             }
 
             parent.remove();
-
             btn.removeEventListener("click", newDeleteBtn);
         })
     }
@@ -184,14 +181,13 @@ const sidebar = (() => {
                 // Allow pressing new project button again
                 newProject();
 
-
                 // Add to local storage of projects
                 let projects = storage.getFromStorage('projects');
                 projects.push(text);
                 storage.addToStorage(projects, 'projects');
 
                 // Allow selection of new projects
-                addHighlight()
+                addHighlight();
             }
         })
         // Cancel button
