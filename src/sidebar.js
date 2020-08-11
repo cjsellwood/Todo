@@ -1,7 +1,7 @@
 import { render } from "./index.js";
 import { storage } from './storage.js';
 
-const sidebarModule = (() => {
+const sidebar = (() => {
     // Allows opening and closing of sidebar on mobile
     function controlSidebar() {
         const openSidebar = document.getElementById("open-sidebar");
@@ -53,7 +53,7 @@ const sidebarModule = (() => {
 
             addDeleteBtn(deleteBtn, addedProject);
         }
-        addHighlight()
+        addHighlight();
     }
 
     // Makes delete project button work
@@ -63,7 +63,7 @@ const sidebarModule = (() => {
             const removed = parent.getElementsByClassName("project-text")[0].textContent;
 
             // Remove from local storage
-            let projects = getProjectsFromStorage();
+            let projects = storage.getFromStorage('projects');
             const removedIndex = projects.indexOf(removed);
             projects.splice(removedIndex, 1);
             storage.addToStorage(projects, 'projects');
@@ -210,7 +210,7 @@ const sidebarModule = (() => {
     function addHighlight() {
         let projectsArray = document.querySelectorAll(".projects-item, #all-projects");
         Array.from(projectsArray).forEach(element => {
-            element.addEventListener("click", function highlight() {
+            element.addEventListener("click", () => {
                 Array.from(projectsArray).forEach(i => {
                     i.style.backgroundColor = "rgb(0, 7, 93)";
                 })
@@ -238,4 +238,4 @@ const sidebarModule = (() => {
     }
 })();
 
-export { sidebarModule }
+export { sidebar }
