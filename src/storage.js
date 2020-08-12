@@ -18,7 +18,7 @@ const storage = (() => {
     return {
         addToStorage,
         getFromStorage
-    }
+    };
 })();
 
-export { storage }
+export { storage };

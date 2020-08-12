@@ -51,7 +51,7 @@ function submitNewTodo() {
             helpers.closeNewTodo();
             render();
         }
-    })
+    });
 }
 
 // Render todo items in grid
@@ -73,7 +73,7 @@ function render() {
                 container.appendChild(todo);
             }
         }
-    })
+    });
 }
 
 // Delete todo from both storage and display
@@ -89,7 +89,7 @@ function addDeleteTodo(deleteBtn, todo) {
         let projects = storage.getFromStorage('todo');
         projects.splice(index, 1);
         storage.addToStorage(projects, 'todo');
-    })
+    });
 }
 
 // Edit todo in storage and display
@@ -196,7 +196,7 @@ function addEditTodo(editBtn, todo) {
             // Replace todo form with new div
             const replacementTodo = createTodoDiv(todoArray[index], index);
             todo.parentNode.replaceChild(replacementTodo, todo);
-        })
+        });
 
         // Add submit button functionality
         submitBtn.addEventListener("click", () => {
@@ -229,8 +229,8 @@ function addEditTodo(editBtn, todo) {
                 const replacementTodo = createTodoDiv(todoArray[index], index);
                 todo.parentNode.replaceChild(replacementTodo, todo);
             }
-        })
-    })
+        });
+    });
 }
 
 // Create div element with todo details inside
@@ -250,7 +250,7 @@ function createTodoDiv(element, i) {
 
     const todoDescription = document.createElement("p");
     todoDescription.textContent = element.description;
-    todoDescription.classList.add("todo-description")
+    todoDescription.classList.add("todo-description");
     todo.appendChild(todoDescription);
 
     const todoPriority = document.createElement("p");
@@ -298,17 +298,17 @@ function sortByPriority() {
             if (element.priority === "High") {
                 newArray.push(element);
             }
-        })
+        });
         array.forEach(element => {
             if (element.priority === "Medium") {
                 newArray.push(element);
             }
-        })
+        });
         array.forEach(element => {
             if (element.priority === "Low") {
                 newArray.push(element);
             }
-        })
+        });
 
         // If already sorted by priority, sort reverse priority
         if (array.every((val, index) => val === newArray[index])) {
@@ -328,7 +328,7 @@ function sortByDate() {
         let newArray = [...array];
         newArray.sort(function(a, b) {
             return new Date(a.dueDate) - new Date(b.dueDate);
-        })
+        });
 
         // If already sorted by date, sort reverse date
         if (array.every((val, index) => val === newArray[index])) {
@@ -342,7 +342,7 @@ function sortByDate() {
 // Create todo object with factory function 
 const todoFactory = (title, description, dueDate, color, priority, project) => {
     return { title, description, dueDate, color, priority, project };
-}
+};
 
 sidebar.startSidebar();
 helpers.startHelpers();
@@ -352,4 +352,4 @@ render();
 sortByPriority();
 sortByDate();
 
-export { render }
+export { render };

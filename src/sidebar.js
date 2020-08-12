@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 import { render } from "./index.js";
 import { storage } from './storage.js';
 
@@ -10,18 +11,18 @@ const sidebar = (() => {
         openSidebar.addEventListener('click', () => {
             sidebar.style.width = "80vw";
             darkened.style.display = "block";
-        })
+        });
         
         const closeSidebar = document.getElementById("close-sidebar");
         closeSidebar.addEventListener('click', () => {
             sidebar.style.width = "0px";
             darkened.style.display = "none";
-        })
+        });
         // Darken other side of sidebar
         darkened.addEventListener('click', () => {
             darkened.style.display = "none";
             sidebar.style.width = "0px";
-        })
+        });
     }
 
     // Add starting projects to list
@@ -75,7 +76,7 @@ const sidebar = (() => {
 
             parent.remove();
             btn.removeEventListener("click", newDeleteBtn);
-        })
+        });
     }
 
     // Add new project button
@@ -118,7 +119,7 @@ const sidebar = (() => {
 
             // Change cursor on new project button
             newBtn.style.cursor = "auto";
-        })
+        });
     }
 
     // Save new Project name or cancel input
@@ -158,7 +159,7 @@ const sidebar = (() => {
                 // Project inner text
                 const projectText = document.createElement("p");
                 projectText.textContent = text;
-                projectText.classList.add("project-text")
+                projectText.classList.add("project-text");
                 addedProject.appendChild(projectText);
 
                 // Delete project button
@@ -189,7 +190,7 @@ const sidebar = (() => {
                 // Allow selection of new projects
                 addHighlight();
             }
-        })
+        });
         // Cancel button
         const projectCancel = document.getElementById("new-project-cancel");
         projectCancel.addEventListener('click', () => {
@@ -199,7 +200,7 @@ const sidebar = (() => {
             
             // Allow pressing new project button again
             newProject();
-        })
+        });
     }
 
     let currentSelection = "All";
@@ -209,13 +210,13 @@ const sidebar = (() => {
             element.addEventListener("click", () => {
                 Array.from(projectsArray).forEach(i => {
                     i.style.backgroundColor = "rgb(0, 7, 93)";
-                })
+                });
                 element.style.backgroundColor = "#3254a8";
 
                 currentSelection = element.textContent;
                 render();
-            })
-        })
+            });
+        });
     }
 
     function getCurrentProject() {
@@ -231,7 +232,7 @@ const sidebar = (() => {
     return {
         startSidebar,
         getCurrentProject,
-    }
+    };
 })();
 
-export { sidebar }
+export { sidebar };

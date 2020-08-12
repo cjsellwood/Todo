@@ -1,4 +1,3 @@
-
 const helpers = (() => {
     // Allow adding new todo when pressing button
     function newTodo() {
@@ -7,10 +6,10 @@ const helpers = (() => {
         setMinDate(dateInput);
     
         // Add color change on hover
-        newTodoBtn.addEventListener("mouseover", newTodoHover)
+        newTodoBtn.addEventListener("mouseover", newTodoHover);
         newTodoBtn.addEventListener("mouseleave", () => {
             newTodoBtn.style.backgroundColor = "rgb(0, 7, 93)";
-        })
+        });
     
         // Change to form when pressed
         newTodoBtn.addEventListener("click", () => {
@@ -23,7 +22,7 @@ const helpers = (() => {
     
             const newTodoForm = document.getElementById("new-todo-form");
             newTodoForm.style.display = "block";
-        })
+        });
     }
     
     // Change color of new todo button on hover
@@ -85,7 +84,7 @@ const helpers = (() => {
             title.style.border = "1px solid white";
             title.setAttribute("Placeholder", "");
             dueDate.style.border = "1px solid white";
-        })
+        });
     }
 
     // Deletes all child nodes of parent
@@ -104,8 +103,8 @@ const helpers = (() => {
         clearCurrentTodo,
         setMinDate,
         formatDate,
-    }
+    };
 })();
 
-export { helpers }
+export { helpers };
 
